@@ -10,7 +10,8 @@ module.exports = {
       'Tertiary':'#FAF4F4',
        'fourth':'#9F9F9F',
        'fifth':' #FFF9E5',
-       'sixth': '#FAF4F480'
+       'sixth': '#FAF4F480',
+       'seventh':'#F5F5F5'
     },
     container: {
  

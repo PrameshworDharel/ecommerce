@@ -3,24 +3,24 @@ import * as Images from "../../assets/photos";
 import { TableCard } from "./TableCard";
 const tablesArray =[
     {
-        image:Images.TableL,
+        image:Images.Sofa2,
         title:"Trenton modular sofa_3",
         price:"Rs. 25,000.00"
     },
     {
-        image:Images.TableM,
+        image:Images.Table2,
         title:"Granite dining table with dining chair",
         price:"Rs. 25,000.00"
     },
     {
         
-        image:Images.TableO,
+        image:Images.Table3,
         title:"Outdoor bar table and stool",
         price:"Rs. 25,000.00"
     },
     {
         
-        image:Images.TableP,
+        image:Images.Mirror1,
         title:"Plain console with teak mirror",
         price:"Rs. 25,000.00"
     },

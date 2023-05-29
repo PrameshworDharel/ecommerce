@@ -38,6 +38,7 @@ export const Shop = () => {
 </div>
       </div>
     </div>
+  
     <Tables/>
     <div className="flex justify-center gap-6 mb-12">
       <button className="border bg-secondary border-secondary px-3">1</button>

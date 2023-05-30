@@ -22,7 +22,7 @@ const FileInput = ({ onChange, ...rest }) => {
         onChange={handleInputChange}
         {...rest}
       />
-      <button className="border px-2 rounded" onClick={handleButtonClick}>
+      <button className="border px-2 rounded" onClick={handleButtonClick} type="button">
         {fileName || "Choose File"}
       </button>
     </div>
@@ -34,7 +34,7 @@ const AddShops = () => {
     id: 1,
     image: null,
     title: "",
-    description: "",
+    details: "",
     price: "",
   });
   const [tableData, setTableData] = useState([]);
@@ -54,7 +54,7 @@ const AddShops = () => {
       id: prevFormData.id + 1,
       image: null,
       title: "",
-      description: "",
+      details: "",
       price: "",
     }));
   };

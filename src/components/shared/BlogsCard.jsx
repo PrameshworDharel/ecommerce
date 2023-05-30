@@ -1,6 +1,7 @@
 import React from "react";
 import * as Icons from "../../assets/icons";
 import { Link } from "react-router-dom";
+import moment from "moment/moment";
 
 export const BlogsCard = (props) => {
   const { src, title, path, createdAt } = props;
@@ -34,7 +35,7 @@ export const BlogsCard = (props) => {
           <div className="flex gap-1 ">
             <Icons.ClockIcon  className=""/>
             <Icons.ClockIcon1 className="absolute ml-2 mt-1"/>
-            {createdAt}
+            {moment(1685363418*1000).startOf('hour').fromNow()}
           </div>
           <div className="flex">
             <Icons.CalenderIcon />

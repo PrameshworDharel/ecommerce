@@ -22,7 +22,7 @@ const location = useLocation();
                    Shop
                    </Link>                
                    <li>About</li>
-                   <li>Contact</li>
+                   <Link to ="/contact">Contact</Link>
                    </ul>
                    <div class="flex justify-end gap-10 w-[50%] mr-8 mt-3">
          <ProfileIcon/>

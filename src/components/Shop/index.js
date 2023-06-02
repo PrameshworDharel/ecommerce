@@ -1,10 +1,10 @@
 import React from "react";
 import { Shop } from "./shop";
 
-const ShopPage=()=>{
+const ShopPage=({ datas })=>{
     return(
         <div>
-            <Shop/>
+            <Shop datas={datas}/>
         </div>
     )
 }

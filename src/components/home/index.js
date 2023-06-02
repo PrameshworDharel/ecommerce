@@ -4,13 +4,13 @@ import Sofa from './Sofa';
 import Blogs from './Blogs';
 import Instragram from './Instragram';
 import Seater from './Seater';
-const Homepage = () => {
+const Homepage = (props) => {
     return(
         <> 
      <Seater/>
-    <Main/>
+    <Main {...props}/>
     <Sofa/>
-    <Blogs/>
+    <Blogs />
     <Instragram/>
         </>
     )

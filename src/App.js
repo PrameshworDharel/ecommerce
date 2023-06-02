@@ -11,7 +11,7 @@ function App() {
     <>
       <Routes>
      <Route path="/" element={<Homepage datas={datas} />} />
-     <Route  path="/Shop" index element={<ShopPage datas={datas} />} />
+     <Route  path="/Shop"  element={<ShopPage datas={datas}  />} />
      <Route
             path="/Contact"
             element={<ContactPage datas={datas} setDatas={setDatas} />}

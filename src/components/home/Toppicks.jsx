@@ -27,7 +27,7 @@ import { ToppicksCard } from "../shared";
 
 // ];
 const Toppicks =({ datas }) => {
-    console.log('gg',datas);
+    console.log(datas);
     return(
         <>
         <div className='text-center mt-6'>

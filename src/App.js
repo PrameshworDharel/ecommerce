@@ -1,12 +1,22 @@
-import React,{ useState }from "react";
+import React,{useEffect, useState }from "react";
 import { Route, Routes } from "react-router-dom";
 import './App.css';
 import  Homepage from "./components/home"
 import ShopPage from "./components/Shop";
 import ContactPage from "./components/Contact";
 import LoginPage from "./components/Login";
+import { fetchShopsItems } from "./components/utils/shopsApiActions";
+
 function App() {
   const [datas, setDatas] = useState([]);
+  useEffect(() => {
+    // (async () => {
+    //   const data = await fetchShopsItems();
+    //   console.log(data);
+    //   setDatas(data);
+    // })();
+    fetchShopsItems(setDatas);
+  }, []);
   return (
     <>
       <Routes>
@@ -18,7 +28,7 @@ function App() {
           />
      <Route path="/login" element={<LoginPage />} />
      <Route path="*" element={<>Page Not Found</>} />
-      </Routes>
+      </Routes>                                                   
     </>
   )
 }

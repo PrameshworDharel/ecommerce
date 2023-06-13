@@ -6,6 +6,7 @@ import ShopPage from "./components/Shop";
 import ContactPage from "./components/Contact";
 import LoginPage from "./components/Login";
 import { fetchShopsItems } from "./components/utils/shopsApiActions";
+import ShopDetails from "./components/Shop/ShopDetails";
 
 function App() {
   const [datas, setDatas] = useState([]);
@@ -21,14 +22,17 @@ function App() {
     <>
       <Routes>
      <Route path="/" element={<Homepage datas={datas} />} />
-     <Route  path="/Shop"  element={<ShopPage datas={datas}  />} />
+     <Route path="/shop">
+            <Route index element={<ShopPage datas={datas} />} />
+            <Route path=":shopId" element={<ShopDetails />} />
+          </Route>
      <Route
             path="/Contact"
             element={<ContactPage datas={datas} setDatas={setDatas} />}
           />
      <Route path="/login" element={<LoginPage />} />
      <Route path="*" element={<>Page Not Found</>} />
-      </Routes>                                                   
+      </Routes >                                                   
     </>
   )
 }

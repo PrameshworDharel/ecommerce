@@ -1,4 +1,4 @@
-import React, {useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   deleteShopItem,
@@ -17,6 +17,9 @@ const AddShops = ({ datas, setDatas }) => {
     details: "",
   });
   const [base64Image, setBase64Image] = useState("");
+  const [errors, setErrors] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(datas);
 
   const convertToBase64 = (file) => {
     const reader = new FileReader();
@@ -39,52 +42,53 @@ const AddShops = ({ datas, setDatas }) => {
       });
     }
   };
+
+  const validateForm = () => {
+    let isValid = true;
+    const errors = {};
+
+    if (!values.title.trim()) {
+      errors.title = "Title is required";
+      isValid = false;
+    }
+
+    if (!values.price.trim()) {
+      errors.price = "Price is required";
+      isValid = false;
+    } else if (isNaN(Number(values.price))) {
+      errors.price = "Price must be a number";
+      isValid = false;
+    }
+
+    if (!values.details.trim()) {
+      errors.details = "Details is required";
+      isValid = false;
+    }
+
+    setErrors(errors);
+    return isValid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    if (!validateForm()) {
+      return;
+    }
 
     if (isEdit) {
-      //Edit
-      // const index = datas.findIndex((data) => data.id === values.id);
+      // Edit
       const currentTimeStamp = Math.floor(Date.now() / 1000);
-      // Slice
-      // setDatas([...datas.slice(0, index), values, ...datas.slice(index + 1)]);
-
-      // Splice
-      // const newDatas = [...datas];
-      //values: image, base64Image
-      // newDatas.splice(index, 1, {
-      //   ...values,
-      //   image: base64Image ? base64Image : values.image,
-      //   updatedAt: currentTimeStamp
-      // });
-      // setDatas(newDatas);
-
-      // Edit data in last or first | Filter
-      // const newDatas = datas.filter((data) => data.id !== values.id);
-      // setDatas([values, ...newDatas]);
-      //editbackend
       await updateShopItems({
         ...values,
         image: base64Image ? base64Image : values.image,
         updatedAt: currentTimeStamp
       });
       await fetchShopsItems(setDatas);
-       setisEdit(false);
+      setisEdit(false);
     } else {
       const id = uuidv4();
       const currentTimeStamp = Math.floor(Date.now() / 1000);
-      // setDatas([
-      //   {
-      //     id,
-      //     ...values,
-      //     image: base64Image,
-      //     createdAt: currentTimeStamp,
-      //     updatedAt: ""
-      //   },
-      //   ...datas
-      // ]);
-      //backend
       await saveShopItems({
         id,
         ...values,
@@ -94,6 +98,7 @@ const AddShops = ({ datas, setDatas }) => {
       });
       await fetchShopsItems(setDatas);
     }
+
     setvalues({
       image: "",
       title: "",
@@ -102,28 +107,32 @@ const AddShops = ({ datas, setDatas }) => {
     });
     setBase64Image("");
   };
-  const chooseImage = () => {
-    fileRef.current.click();
+
+  const handleDelete = async (id) => {
+    await deleteShopItem(id);
+    await fetchShopsItems(setDatas);
   };
 
-    const handleDelete = async (id) => {
-      // Splice
-      // const index = datas.findIndex((data) => data.id === id);
-      // const newDatas = [...datas];
-      // newDatas.splice(index, 1);
-      // setDatas(newDatas);
-      //Filter
-  
-      await deleteShopItem(id);
-      await fetchShopsItems(setDatas);
-  
-      // setDatas(datas.filter((data) => data.id !== id));
-    };
-  const handleEdit= (item) => {
+  const handleEdit = (item) => {
     setisEdit(true);
     setvalues(item);
   };
-  
+
+  const chooseImage = () => {
+    fileRef.current.click();
+  };
+     
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    setSearchQuery(value);
+    const filteredItems = datas.filter(item =>
+        item.id.toLowerCase().includes(value.toLowerCase())||
+      item.title.toLowerCase().includes(value.toLowerCase()) ||
+      item.price.toLowerCase().includes(value.toLowerCase())||
+      item.details.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filteredItems);
+  };
 
   return (
     <>
@@ -145,6 +154,7 @@ const AddShops = ({ datas, setDatas }) => {
                   onChange={handleChange}
                   className="block border"
                 />
+                {errors.title && <p>{errors.title}</p>}
               </div>
 
               <div className="mb-4">
@@ -156,6 +166,7 @@ const AddShops = ({ datas, setDatas }) => {
                   onChange={handleChange}
                   className="block border"
                 />
+                {errors.price && <p>{errors.price}</p>}
               </div>
               <div className="mb-4">
                 <label>Details: </label>
@@ -168,18 +179,26 @@ const AddShops = ({ datas, setDatas }) => {
                   cols={35}
                   className="block border"
                 />
+                {errors.details && <p>{errors.details}</p>}
               </div>
               <button
                 className="px-4 py-1 border  ml-16 rounded-md shadow-2xl  bg-secondary mb-4"
                 onClick={handleSubmit}
               >
-                {" "}
                 {isEdit ? "Update" : "Submit"}
               </button>
             </form>
           </div>
           <div className="col-span-2 shadow-xl">
             <div className="">
+            <input
+                type="text"
+                name="search"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={handleSearch}
+                className="block border mb-4 px-2 py-1 rounded"
+              />
               <table className="w-full">
                 <thead>
                   <tr className="text-left bg-secondary">
@@ -193,7 +212,7 @@ const AddShops = ({ datas, setDatas }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {datas.map((item, index) => (
+                {filteredData.map((item, index) => (
                     <tr className="border-b" key={index}>
                       <td className="px-4 py-2">{item.id}</td>
                       <td className="px-4 py-2">
@@ -234,4 +253,5 @@ const AddShops = ({ datas, setDatas }) => {
     </>
   );
 };
+
 export default AddShops;

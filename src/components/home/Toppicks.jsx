@@ -1,6 +1,7 @@
 import React from 'react'
 // import * as Images from "../../assets/photos";
-import { ToppicksCard } from "../shared";
+import ToppicksCard from "../shared/ToppicksCard";
+import { Link } from "react-router-dom";
 // const toppicksArray =[
 //     {
 //         image:Images.Sofa2,
@@ -26,29 +27,37 @@ import { ToppicksCard } from "../shared";
 //     }
 
 // ];
-const Toppicks =({ datas }) => {
-    console.log(datas);
-    return(
-        <>
-        <div className='text-center mt-6'>
-       <h1 className=' font-semibold text-2xl '>Top Picks For You</h1>
-       <p class="text-fourth"><small>Find a bright ideal to suit your taste with our great selection of suspension, floor and table lights.</small></p>
+const TopPicks = ({ datas }) => {
+  return (
+    <>
+      <div className="container py-14">
+        <h3 className="text-title text-content-primary text-center">
+          Top Picks For You
+        </h3>
+        <p className="text-body text-content-secondary text-center ">
+          Find a bright ideal to suit your taste with our great selection of
+          suspension, floor and table lights.
+        </p>
+        <div className="mt-16 grid grid-cols-4 gap-8 pb-16">
+          {datas.map((item) => {
+            return (
+              <ToppicksCard
+                key={item.id}
+                id={item.id}
+                src={item.image}
+                title={item.title}
+                price={item.price}
+              />
+            );
+          })}
         </div>
-        <div class="flex ">
-           {datas.map((toppicks, index) => {
-                const{image,title,price } = toppicks;
-                return (
-                   <ToppicksCard key={index} src={image} title={title} price={price}/>
-                );
-            
-            })}
-             
-            </div>
-<div className='text-center'>
-            <button className=" border-b-2 mb-16">View More</button>
-            </div>
-            </>
-        );
-        
+        <div className="flex justify-center">
+          <Link to="/shop" className="text-subtitle link-btn">
+            View More
+          </Link>
+        </div>
+      </div>
+    </>
+  );
 };
-export default Toppicks;
+export default TopPicks;

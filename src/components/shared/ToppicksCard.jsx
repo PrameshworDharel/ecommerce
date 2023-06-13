@@ -1,15 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 export const  ToppicksCard= (props) => {
-  const { src, title, price} = props;
+  const { id,src, title, price} = props;
   return (
     <>
-      <div className="ml-6 mr-6  mb-10">
-        <div className="h-64 "> <img src={src}alt={title} className="h-64 w-64"/>
-        </div>
-        <h4>{title}</h4>
-        <h3 className="font-semibold">{price}</h3>
-        </div>
-      
+       <div>
+        {src && (
+          <img
+            src={src}
+            alt={title}
+            className="w-auto h-[280px] object-contain"
+          />
+        )}
+        <h4 className="text-body font-normal pb-2.5">{title}</h4>
+        <p className="text-subtitle">Rs.{price.toLocaleString("en-US")}</p>
+        <Link to={`/shop/${id}`} className="underline mt-2">
+          View Details
+        </Link>
+      </div>
     </>
   );
 };
+export default ToppicksCard;

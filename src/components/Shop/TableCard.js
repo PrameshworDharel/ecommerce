@@ -1,24 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 export const  TableCard= (props) => {
-  const { src, title, price} = props;
+  const {id, src, title, price} = props;
   return (
     <>
-      <div  className="ml-6 mr-6  mb-10">
-        <div>
+       <div>
         {src && (
-           <img
-           src={src}
+          <img
+            src={src}
             alt={title}
             className="w-auto h-[280px] object-contain"
-         
           />
         )}
-        </div>
-        <h4>{title}</h4>
-        <h3 className="font-semibold">Rs.{price.toLocaleString("en-US")}</h3>
-        </div>
-       
+        <h4 className="text-body font-normal pb-2.5">{title}</h4>
+        <p className="text-subtitle">Rs.{price.toLocaleString("en-US")}</p>
+        <Link to={`/shop/${id}`} className="underline mt-2">
+          View Details
+        </Link>
+      </div>
     </>
-
   );
 };
+       
